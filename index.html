@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Giphy API</title>
+</head>
+
+<body>
+
+    <h1>Most Beloved Creatures</h1>
+
+    
+    <div id="topics-buttons"></div>
+
+    
+    <form id="topics-form">
+        <label for="topics-input">Add an animal</label>
+        <input type="text" id="topics-input"><br>
+
+        <input id="add-animal" type="submit" value="Add an animal">
+
+    </form>
+
+    <div id="giphy-imgs"></div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+   
+    var queryURL ="";
+    var topics= ["dogs", "horses", "elephants", "aligators", "rabbits","lions", "monkeys"];
+
+    
+
+
+
+    
+    function renderButtons(){
+
+        // Deletes the initial animals prior to adding new ones (to not repeat buttons)
+            $("#topics-buttons").empty();
+
+        // Loop through the "topics" array
+                for(var i=0; i<topics.length;i++){
+
+                // Then dynamicaly generates buttons for each animal in the array
+                var topicsButtons =$("<button>");
+
+                // Add a class to button
+               
+
+                // Added a data-attribute
+                topicsButtons.attr("data-name",topics[i]);
+
+                // Provided the initial button text 
+                topicsButtons.text(topics[i]);
+
+                // append the button to the buttons-view div
+                $("#topics-buttons").append(topicsButtons);
+                }
+            
+    }
+    renderButtons();
+
+//$.ajax ({
+ //url:queryURL, //where are we getting information from? (destination)
+// method:"GET"  //four main kinds, get, post, put, delete <---not really optional on a lot of APIs. USED FOR RETRIEVING DATA IN A DATABASE
+
+//}).then (function(response){});  //or done.  matters because the response doesn't appear instantly.  happens after the page has loaded. 
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>
