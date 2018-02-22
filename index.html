@@ -16,6 +16,7 @@
     
     <form id="topics-form">
         <label for="topics-input">Add an animal</label>
+
         <input type="text" id="topics-input"><br>
 
         <input id="add-animal" type="submit" value="Add an animal">
@@ -25,13 +26,14 @@
     <div id="giphy-imgs"></div>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script type="text/javascript">
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
 
 
    
     var queryURL ="";
-    var topics= ["dogs", "horses", "elephants", "aligators", "rabbits","lions", "monkeys"];
+    var topics= ["dogs", "horses", "elephants", "rabbits","lions", "monkeys"];
 
     
 
@@ -40,10 +42,10 @@
     
     function renderButtons(){
 
-        // Deletes the initial animals prior to adding new ones (to not repeat buttons)
+        // Deletes the initial animals buttons prior to adding new ones (to not repeat buttons)
             $("#topics-buttons").empty();
 
-        // Loop through the "topics" array
+                // Loop through the "topics" array
                 for(var i=0; i<topics.length;i++){
 
                 // Then dynamicaly generates buttons for each animal in the array
@@ -58,12 +60,36 @@
                 // Provided the initial button text 
                 topicsButtons.text(topics[i]);
 
-                // append the button to the buttons-view div
+                // append the button to the topics-buttons div
                 $("#topics-buttons").append(topicsButtons);
                 }
             
     }
+    
     renderButtons();
+
+
+                        // This function handles events when the add animals the button is clicked
+
+                        $("#add-animal").on("click", function(event){
+                            event.preventDefault();
+                        
+
+                        // This line of code will grab the input from the textbox
+                        var animalEntered = $("#topics-input").val().trim();
+                        topics.push(animalEntered);
+
+
+                        // The animal from the textbox is then added to our array
+
+
+
+                        // Calling renderButtons which handles the processing of our topics array
+                        renderButtons();
+                        })
+
+
+
 
 //$.ajax ({
  //url:queryURL, //where are we getting information from? (destination)
