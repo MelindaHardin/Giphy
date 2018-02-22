@@ -32,13 +32,24 @@
 
 
    
-    var queryURL =""; //<-----------This is where I put the giphy URL
     var topics= ["dogs", "horses", "elephants", "rabbits","lions", "monkeys"];
 
 
     function displayNewGif(){
-        alert ("hi");
+        var queryURL =""; //<-----------This is where I put the giphy URL
+        var animals= $(this)attr.("data-name");
 
+       // Creates an AJAX call for the specific giphy button being clicked
+
+       $.ajax({
+           url:queryURL,
+           method: "GET"
+       }).then (function (response){
+            console.log(response);
+            //tell giphy API to generate 10 images.
+            //append imgs to "giphy-imgs" div
+            //on click play and stop (??)
+       })
     }
 
     
@@ -82,16 +93,6 @@
                     $(document).on("click", ".inputButtons", displayNewGif);
                   
                     renderButtons();
-
-
-//$.ajax ({
- //url:queryURL, //where are we getting information from? (destination)
-// method:"GET"  //four main kinds, get, post, put, delete <---not really optional on a lot of APIs. USED FOR RETRIEVING DATA IN A DATABASE
-
-//}).then (function(response){});  //or done.  matters because the response doesn't appear instantly.  happens after the page has loaded. 
-
-
-
 
 
   </script>
