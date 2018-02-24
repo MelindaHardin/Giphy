@@ -14,92 +14,84 @@
     <div id="topics-buttons"></div>
 
 
-    <form id="topics-form">
-        <label for="topics-input">Add an animal</label>
+<form id="topics-form">
+    <label for="topics-input">Add an animal</label>
 
-        <input type="text" id="topics-input">
-        <br>
+    <input type="text" id="topics-input">
+    <br>
 
-        <input id="add-animal" type="submit" value="Add an animal">
+    <input id="add-animal" type="submit" value="Add an animal">
 
-    </form>
+</form>
 
-    <div id="giphy-imgs"></div>
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
+<div id="giphy-imgs"></div>
 
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+        
+        
         var topics = ["dogs", "horses", "elephants", "rabbits", "lions", "monkeys"];
-
-
+        
+        
         function displayNewGif() {
                 
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal +"&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
-
+            
             var animal = $(this).attr("data-animal");
+
 
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
-                console.log(queryURL);
-                console.log(response);
-                var animalDiv = $("<div class='animal'>");
-               //make a for loop
+                //console.log(queryURL);
+                //console.log(response);
+                var results = response.data;
+
+                for (var i = 0; i < results.length; i++) {
+
+                    var animalDiv = $("<div class='animal'>"); 
+
+                    var rating = response.data[i].rating;  
+
+                    var p1 = $("<p>").text("Rating: " + rating);  
+
+                    var animalImage=$("<img>");
+
+                    animalImage.attr("src", response.data[i].images.original_still.url);                       
                
-                    var imageURL= response.data[0].images.original.url;
-                    var animalGif = $("<img>").attr("src", imageURL);
                     
-                    var rating = response.data[0].rating;
-                    var p1 = $("<p>").text("Rating: " + rating);
-                
-                $("#giphy-imgs").append(animalDiv, animalGif);
-                
-                    animalDiv.prepend(p1);
+                    animalDiv.append (p1, animalImage);
 
-                //end of for loop
-
+                   
+                    $("#giphy-imgs").prepend(animalDiv);
+                
+                   
+               } 
             })
         }
-
-
         function renderButtons() {
-
             $("#topics-buttons").empty();
-
             for (var i = 0; i < topics.length; i++) {
-
                 var topicsButtons = $("<button>");
                 topicsButtons.addClass("inputButtons");
                 topicsButtons.attr("data-animal", topics[i]);
                 topicsButtons.text(topics[i]);
                 $("#topics-buttons").append(topicsButtons);
             }
-
         }
         
-
-
         $("#add-animal").on("click", function (event) {
-
             event.preventDefault();
             var animalEntered = $("#topics-input").val().trim();
             topics.push(animalEntered);
             $("#topics-input").val().trim();
             renderButtons();
-
         })
-
-
-
         $(document).on("click", ".inputButtons", displayNewGif);
-
         renderButtons();
-
-
     </script>
 
 </body>
