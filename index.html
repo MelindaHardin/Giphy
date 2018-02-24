@@ -37,11 +37,9 @@
 
         function displayNewGif() {
                 //I don't think this is working. API Key? 
-            var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&" + q + "&limit=10&offset=0&rating=G&lang=en";
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal +"&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
 
-            var q = $(this).attr("data-name");
-
-
+            var animal = $(this).attr("data-animal");
 
             $.ajax({
                 url: queryURL,
@@ -50,12 +48,14 @@
                 console.log(queryURL);
                 console.log(response);
                 var animalDiv = $("<div class='animal'>");
+                
+                var imgURL= response.images.original;
+                var animalGif = $("<img>").attr("src", imageURL);
+                
                 var rating = response.rating;
                 var p1 = $("<p>").text("Rating: " + rating);
-
-                //var gifImg = response.images.fixed_height_still;//how do I get the image? 
-                var gif = $("<img>").attr("src", response.original);
-
+               
+               $("#giphy-imgs").append(animalGif);
                 animalDiv.prepend(p1);
 
 
@@ -72,7 +72,7 @@
 
                 var topicsButtons = $("<button>");
                 topicsButtons.addClass("inputButtons");
-                topicsButtons.attr("data-name", topics[i]);
+                topicsButtons.attr("data-animal", topics[i]);
                 topicsButtons.text(topics[i]);
                 $("#topics-buttons").append(topicsButtons);
             }
