@@ -48,19 +48,19 @@
                 console.log(queryURL);
                 console.log(response);
                 var animalDiv = $("<div class='animal'>");
+               //make a for loop
                
-               
-                var imageURL= response.data[0].images.original.url;
-                var animalGif = $("<img>").attr("src", imageURL);
+                    var imageURL= response.data[0].images.original.url;
+                    var animalGif = $("<img>").attr("src", imageURL);
+                    
+                    var rating = response.data[0].rating;
+                    var p1 = $("<p>").text("Rating: " + rating);
                 
-                var rating = response.data[0].rating;
-                var p1 = $("<p>").text("Rating: " + rating);
-               
-               $("#giphy-imgs").append(animalDiv, animalGif);
-               
-                animalDiv.prepend(p1);
+                $("#giphy-imgs").append(animalDiv, animalGif);
+                
+                    animalDiv.prepend(p1);
 
-
+                //end of for loop
 
             })
         }
