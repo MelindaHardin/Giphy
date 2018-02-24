@@ -36,7 +36,7 @@
 
 
         function displayNewGif() {
-                //I don't think this is working. API Key? 
+                
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal +"&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
 
             var animal = $(this).attr("data-animal");
@@ -49,8 +49,8 @@
                 console.log(response);
                 var animalDiv = $("<div class='animal'>");
                
-               //var imageURL="";
-                var imageURL= response.data[0].images.original_still.url;
+               
+                var imageURL= response.data[0].images.original.url;
                 var animalGif = $("<img>").attr("src", imageURL);
                 
                 var rating = response.data[0].rating;
