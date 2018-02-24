@@ -2,22 +2,23 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Giphy API</title>
+    <meta charset="utf-8">
+    <title>Giphy API</title>
 </head>
 
 <body>
 
-    <h1>Most Beloved Creatures</h1>
+    <h1>Animals</h1>
 
-    
+
     <div id="topics-buttons"></div>
 
-    
+
     <form id="topics-form">
         <label for="topics-input">Add an animal</label>
 
-        <input type="text" id="topics-input"><br>
+        <input type="text" id="topics-input">
+        <br>
 
         <input id="add-animal" type="submit" value="Add an animal">
 
@@ -26,76 +27,78 @@
     <div id="giphy-imgs"></div>
 
 
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
 
 
-   
-    var topics= ["dogs", "horses", "elephants", "rabbits","lions", "monkeys"];
+        var topics = ["dogs", "horses", "elephants", "rabbits", "lions", "monkeys"];
 
 
- function displayNewGif(){
-        var queryURL ="https://api.giphy.com/v1/gifs/search?q=" + animals + "&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV"; //<-----------This is where I put the giphy URL
-        var animals= $(this).attr("data-name");
+        function displayNewGif() {
+                //I don't think this is working. API Key? 
+            var queryURL = "https://api.giphy.com/v1/gifs/search?" + animals + "&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV";
 
-       // Creates an AJAX call for the specific giphy button being clicked
+            var animals = $(this).attr("data-name");
 
-       $.ajax({
-           url:queryURL,
-           method: "GET"
-       }).then (function (response){
-            console.log(response);
-            //tell giphy API to generate 10 images.
-            //append imgs to "giphy-imgs" div
-            //on click play and stop (see pausing gifs)
-       })
-    }
 
-    
-    function renderButtons(){
 
-        $("#topics-buttons").empty();
-            
-            for(var i=0; i<topics.length;i++){
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                //console.log(queryURL);
+                //console.log(response);
+                var animalDiv = $("<div class='animal'>");
+                var rating = response.rating;
+                var p1 = $("<p>").text("Rating: " + rating);
 
-               var topicsButtons =$("<button>");
+                var gifImg = response.images.fixed_height_still;//how do I get the image? 
+                var gif = $("<img>").attr("src", gifImg);
 
-               topicsButtons.addClass("inputButtons")
-              
-                topicsButtons.attr("data-name",topics[i]);
+                animalDiv.prepend(p1);
 
+
+
+            })
+        }
+
+
+        function renderButtons() {
+
+            $("#topics-buttons").empty();
+
+            for (var i = 0; i < topics.length; i++) {
+
+                var topicsButtons = $("<button>");
+                topicsButtons.addClass("inputButtons");
+                topicsButtons.attr("data-name", topics[i]);
                 topicsButtons.text(topics[i]);
-
                 $("#topics-buttons").append(topicsButtons);
             }
-            
-    }
-    renderButtons();
+
+        }
+        
 
 
-            $("#add-animal").on("click", function(event){
-            
-                event.preventDefault();
-                
-                var animalEntered = $("#topics-input").val().trim();
-                
-                topics.push(animalEntered);
-                
-                $("#topics-input").val("")
+        $("#add-animal").on("click", function (event) {
 
-                renderButtons();
-            
-            })
+            event.preventDefault();
+            var animalEntered = $("#topics-input").val().trim();
+            topics.push(animalEntered);
+            $("#topics-input").val().trim();
+            renderButtons();
+
+        })
 
 
-              
-                    $(document).on("click", ".inputButtons", displayNewGif);
-                  
-                    renderButtons();
+
+        $(document).on("click", ".inputButtons", displayNewGif);
+
+        renderButtons();
 
 
-  </script>
+    </script>
 
 </body>
 
