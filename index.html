@@ -36,7 +36,7 @@
 
 
  function displayNewGif(){
-        var queryURL ="https://api.giphy.com/v1/" + animal + "&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV"; //<-----------This is where I put the giphy URL
+        var queryURL ="https://api.giphy.com/v1/gifs/search?q=" + animals + "&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV"; //<-----------This is where I put the giphy URL
         var animals= $(this).attr("data-name");
 
        // Creates an AJAX call for the specific giphy button being clicked
