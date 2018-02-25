@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Giphy API</title>
+    <title>Giphy API</title>    
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -27,41 +29,51 @@
 <div id="giphy-imgs"></div>
 
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
         
         
         var topics = ["dogs", "horses", "elephants", "rabbits", "lions", "monkeys"];
-        var animalImage="";
+        
         
         function displayNewGif() {
                 
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal +"&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animals +"&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
             
-            var animal = $(this).attr("data-animal");
-
-
+            var animals = $(this).attr("data-name");// <----NEED HELP
+            
+            
+                //AJAX CALL 
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
-                //console.log(queryURL);
-                //console.log(response);
+                console.log(response);
+                
                 var results = response.data;
-
+                
+                //looping through the produced images
                 for (var i = 0; i < results.length; i++) {
-
+                            //create a div for the gifs
                     var animalDiv = $("<div class='animal'>"); 
 
+                            //get rating info
                     var rating = response.data[i].rating;  
 
                     var p1 = $("<p>").text("Rating: " + rating);  
 
-                    animalImage=$("<img>");
+                            //get images
+                    var animatedGif=response.data[i].images.original.url;
 
-                    animalImage.attr("src", response.data[i].images.original_still.url);                       
-                                   
+                    var stillGif=response.data[i].images.original_still.url;
+                   
+                    var animalImage=$("<img>").attr("src", stillGif);
+
+                    animalImage.attr("data-still",stillGif);
+                        
+                    animalDiv.attr("data-animate", animatedGif);
+                    
+                            //display image and rating
                     animalDiv.append (p1, animalImage);
                    
                     $("#giphy-imgs").prepend(animalDiv);
@@ -78,7 +90,7 @@
 
                 topicsButtons.addClass("inputButtons");
 
-                topicsButtons.attr("data-animal", topics[i]);
+                topicsButtons.attr("data-name", topics[i]);
 
                 topicsButtons.text(topics[i]);
 
@@ -93,13 +105,34 @@
             var animalEntered = $("#topics-input").val().trim();
 
             topics.push(animalEntered);
-            
+          
             renderButtons();
         })
+
+
+        //click to play and stop
+        $(".animal").on("click", function() {  // <----NEED HELP
+
+        var state = $(this).attr("data-state");
+
+            if (state === "still") {
+
+                $(this).attr("src", $(this).attr("data-animate"));
+
+                $(this).attr("data-state", "animate");
+
+            } else {
+
+                $(this).attr("src", $(this).attr("data-still"));
+
+                $(this).attr("data-state", "still");
+                }
+        });
 
         $(document).on("click", ".inputButtons", displayNewGif);
         
         renderButtons();
+
     </script>
 
 </body>
