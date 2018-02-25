@@ -11,7 +11,7 @@
     <h1>Animals</h1>
 
 
-    <div id="topics-buttons"></div>
+<div id="topics-buttons"></div>
 
 
 <form id="topics-form">
@@ -33,7 +33,7 @@
         
         
         var topics = ["dogs", "horses", "elephants", "rabbits", "lions", "monkeys"];
-        
+        var animalImage="";
         
         function displayNewGif() {
                 
@@ -58,39 +58,47 @@
 
                     var p1 = $("<p>").text("Rating: " + rating);  
 
-                    var animalImage=$("<img>");
+                    animalImage=$("<img>");
 
                     animalImage.attr("src", response.data[i].images.original_still.url);                       
-               
-                    
+                                   
                     animalDiv.append (p1, animalImage);
-
                    
                     $("#giphy-imgs").prepend(animalDiv);
-                
-                   
-               } 
+                } 
             })
         }
         function renderButtons() {
+
             $("#topics-buttons").empty();
+
             for (var i = 0; i < topics.length; i++) {
+
                 var topicsButtons = $("<button>");
+
                 topicsButtons.addClass("inputButtons");
+
                 topicsButtons.attr("data-animal", topics[i]);
+
                 topicsButtons.text(topics[i]);
+
                 $("#topics-buttons").append(topicsButtons);
             }
         }
         
         $("#add-animal").on("click", function (event) {
+
             event.preventDefault();
+
             var animalEntered = $("#topics-input").val().trim();
+
             topics.push(animalEntered);
-            $("#topics-input").val().trim();
+            
             renderButtons();
         })
+
         $(document).on("click", ".inputButtons", displayNewGif);
+        
         renderButtons();
     </script>
 
