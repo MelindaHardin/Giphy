@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Giphy API</title>    
-    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+    <title>Giphy API</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT"
+        crossorigin="anonymous">
 
 </head>
 
@@ -13,56 +14,56 @@
     <h1>Animals</h1>
 
 
-<div id="topics-buttons"></div>
+    <div id="topics-buttons"></div>
 
 
-<form id="topics-form">
-    <label for="topics-input">Add an animal</label>
+    <form id="topics-form">
+        <label for="topics-input">Add an animal</label>
 
-    <input type="text" id="topics-input">
-    <br>
+        <input type="text" id="topics-input">
+        <br>
 
-    <input id="add-animal" type="submit" value="Add an animal">
+        <input id="add-animal" type="submit" value="Add an animal">
 
-</form>
+    </form>
 
-<div id="giphy-imgs"></div>
+    <div id="giphy-imgs"></div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-        
-        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
         var topics = ["dogs", "horses", "elephants", "rabbits", "lions", "monkeys"];
-        
-        
+
+
         function displayNewGif() {
-                
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animals +"&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
             
-            var animals = $(this).attr("data-name");// <----NEED HELP
-            
-            
-                //AJAX CALL 
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animals + "&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
+
+            var animals = $(this).attr("data-name");// <----NEED HELP WILL NOT GRAB DATA FROM INPUT (SEE "function renderButtons")????
+
+
+            //AJAX CALL 
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
-                console.log(response);
-                
+                //console.log(response);
+
                 var results = response.data;
-                
+
                 //looping through the produced images
                 for (var i = 0; i < results.length; i++) {
-                            //create a div for the gifs
-                    var animalDiv = $("<div class='animal'>"); 
+                    //create a div for the gifs
+                    var animalDiv = $("<div class='animal'>");
 
-                            //get rating info
-                    var rating = response.data[i].rating;  
+                    //get rating info
+                    var rating = response.data[i].rating;
 
-                    var p1 = $("<p>").text("Rating: " + rating);  
+                    var p1 = $("<p>").text("Rating: " + rating);
 
-                            //get images
+                    //get images
                     var animatedGif=response.data[i].images.original.url;
 
                     var stillGif=response.data[i].images.original_still.url;
@@ -73,11 +74,11 @@
                         
                     animalDiv.attr("data-animate", animatedGif);
                     
-                            //display image and rating
+                    //display image and rating
                     animalDiv.append (p1, animalImage);
                    
                     $("#giphy-imgs").prepend(animalDiv);
-                } 
+                }
             })
         }
         function renderButtons() {
@@ -97,23 +98,23 @@
                 $("#topics-buttons").append(topicsButtons);
             }
         }
-        
+
         $("#add-animal").on("click", function (event) {
 
             event.preventDefault();
 
-            var animalEntered = $("#topics-input").val().trim();
+            var animals = $("#topics-input").val().trim();
 
-            topics.push(animalEntered);
-          
+            topics.push(animals);
+
             renderButtons();
         })
 
 
         //click to play and stop
-        $(".animal").on("click", function() {  // <----NEED HELP
+        /*$(".animal").on("click", function () {  // <----NEED HELP
 
-        var state = $(this).attr("data-state");
+            var state = $(this).attr("data-state");
 
             if (state === "still") {
 
@@ -126,11 +127,11 @@
                 $(this).attr("src", $(this).attr("data-still"));
 
                 $(this).attr("data-state", "still");
-                }
-        });
+            }
+        });*/
 
         $(document).on("click", ".inputButtons", displayNewGif);
-        
+
         renderButtons();
 
     </script>
