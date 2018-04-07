@@ -38,10 +38,10 @@
 
 
         function displayNewGif() {
-            
+            var animals = $(this).attr("data-name");
+
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animals + "&api_key=6j59bfFQh1ukbUtOetli3m2wX18atuGV&limit=10";
 
-            var animals = $(this).attr("data-name");// <----NEED HELP WILL NOT GRAB DATA FROM INPUT (SEE "function renderButtons")????
 
 
             //AJAX CALL 
@@ -64,20 +64,23 @@
                     var p1 = $("<p>").text("Rating: " + rating);
 
                     //get images
-                    var animatedGif=response.data[i].images.original.url;
+                    var animatedGif = response.data[i].images.original.url;
 
-                    var stillGif=response.data[i].images.original_still.url;
-                   
-                    var animalImage=$("<img>").attr("src", stillGif);
+                    var stillGif = response.data[i].images.original_still.url;
 
-                    animalImage.attr("data-still",stillGif);
-                        
+                    var animalImage = $("<img>").attr("src", stillGif);
+
+                    animalImage.attr("data-still", stillGif);
+
                     animalDiv.attr("data-animate", animatedGif);
-                    
+
                     //display image and rating
-                    animalDiv.append (p1, animalImage);
-                   
+                    animalDiv.append(p1, animalImage);
+
                     $("#giphy-imgs").prepend(animalDiv);
+
+
+
                 }
             })
         }
@@ -108,11 +111,12 @@
             topics.push(animals);
 
             renderButtons();
+
         })
 
 
         //click to play and stop
-        /*$(".animal").on("click", function () {  // <----NEED HELP
+        $(".animal").on("click", function () {  // <----NEED HELP
 
             var state = $(this).attr("data-state");
 
@@ -128,11 +132,12 @@
 
                 $(this).attr("data-state", "still");
             }
-        });*/
+        });
 
         $(document).on("click", ".inputButtons", displayNewGif);
 
         renderButtons();
+
 
     </script>
 
