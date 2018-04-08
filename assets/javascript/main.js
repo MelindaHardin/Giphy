@@ -37,7 +37,7 @@ $(document).on("click", ".searchButton", function () {  //api call
             image.attr("data-still", still);
             image.attr("data-animated", animated);
             image.attr("data-state", "still");
-            image.addClass ("searchImage");
+            image.addClass("searchImage");
             searchDiv.append(p1);
             searchDiv.append(image);
             $("#searches").append(searchDiv);
@@ -48,23 +48,23 @@ $(document).on("click", ".searchButton", function () {  //api call
 
 })
 
-$(document).on("click", ".searchImage", function(){
+$(document).on("click", ".searchImage", function () {
     var state = $(this).attr("data-state");
-    if(state === "still"){
+    if (state === "still") {
         $(this).attr("src", $(this).data("animated"));
-        $(this).attr("data-state","animated");
-    }else {
+        $(this).attr("data-state", "animated");
+    } else {
         $(this).attr("src", $(this).data("still"));
-        $(this).attr("data-state","still");
+        $(this).attr("data-state", "still");
     }
 })
 
 
-$("#addSearch").on("click", function(event){
+$("#addSearch").on("click", function (event) {
     event.preventDefault();
     var newSearch = $("input").val();  //gets input from text box
     searchArray.push(newSearch);
     populateButtons(searchArray, "searchButton", "#buttonsArea");
     return false;
-    
+
 })
